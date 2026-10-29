@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Acerte o Bug · Construção guiada</title>
+<style>
+:root{--navy:#0b1530;--line:#dce4ef;--purple:#7c3aed;--ink:#102038;--muted:#52647e;--mint:#a7f3d0;--cream:#f5f8fc}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--cream);color:var(--ink);font:16px/1.65 system-ui,-apple-system,Segoe UI,Arial,sans-serif}button,a{font:inherit}a{color:#5532be}button{cursor:pointer}button:disabled{opacity:.35;cursor:not-allowed}.mast{background:radial-gradient(circle at 80% 10%,#35447b 0,transparent 38%),linear-gradient(125deg,#101937,#172759);color:white;padding:42px max(20px,calc((100vw - 1050px)/2)) 32px}.brand{font-size:12px;letter-spacing:.13em;color:#b9c8ec;font-weight:800;text-transform:uppercase}.mast h1{font-size:clamp(28px,5vw,52px);line-height:1.1;letter-spacing:-.035em;margin:9px 0 14px}.mast p{max-width:720px;color:#d6e0ff;margin:0}.mast .emoji{font-size:36px}.toplinks{display:flex;flex-wrap:wrap;gap:9px;margin-top:24px}.toplinks a{color:#f6efff;background:#ffffff14;border:1px solid #ffffff3a;padding:7px 12px;border-radius:10px;text-decoration:none;font-size:13px}.shell{max-width:1050px;padding:22px 20px 70px;margin:auto}.intro{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px 22px;display:grid;grid-template-columns:1fr auto;gap:18px;align-items:center}.intro h2{font-size:16px;margin:0 0 4px}.intro p{margin:0;color:var(--muted);font-size:14px}.intro strong{color:#28175e}.steps{position:sticky;top:0;z-index:10;background:#f5f8fcf2;backdrop-filter:blur(12px);padding:14px 0;display:flex;gap:8px;overflow-x:auto;scrollbar-width:thin}.steps button{flex:0 0 auto;border:1px solid #cad6e7;background:white;border-radius:12px;padding:8px 13px;font-weight:800;color:#465675}.steps button.active{background:var(--navy);color:white;border-color:var(--navy)}.etapa{background:#fff;border:1px solid var(--line);border-radius:22px;padding:clamp(18px,4vw,34px);box-shadow:0 16px 38px #24385f0a}.stage-top{display:flex;align-items:center;justify-content:space-between;gap:10px}.counter,.small-label{font-weight:800;letter-spacing:.085em;font-size:11px;color:#6650a4}.time-pill{background:#e8f2ff;border-radius:40px;color:#31588f;padding:5px 11px;font-weight:800;font-size:12px}.etapa h2{font-size:clamp(25px,3.5vw,36px);line-height:1.2;letter-spacing:-.025em;margin:13px 0 12px}.main-intro{color:var(--muted);margin:0 0 24px}.instruction{border:1px solid #c8e9de;background:#effaf4;border-radius:13px;padding:12px 16px;display:flex;gap:12px;align-items:baseline;margin-bottom:18px}.instruction .ic{color:#087d62;font-size:13px;font-weight:900}.instruction p{margin:0;font-size:14px}.panel-code{border:1px solid #233254;border-radius:14px;overflow:hidden;margin:18px 0}.panel-head{background:#17233e;color:white;padding:13px 15px;display:flex;justify-content:space-between;align-items:center;gap:10px}.panel-head .small-label{display:block;color:#8fa9ce}.panel-head strong{font:700 16px/1.5 ui-monospace,Consolas,monospace}.copy{background:var(--mint);color:#064e3b;border:0;padding:8px 14px;border-radius:8px;font-size:13px;font-weight:800;white-space:nowrap}.code,.diff pre{margin:0;background:#0b152c;color:#dceafe;overflow:auto;padding:17px;font:13px/1.6 ui-monospace,SFMono-Regular,Consolas,monospace;tab-size:2;white-space:pre}.code{max-height:390px}details{border:1px solid #dce4ef;border-radius:12px;padding:14px 17px;background:#f9fbff}details summary{cursor:pointer;font-weight:750}details p{color:#3e526d;font-size:14px}.diff pre{border-radius:8px;max-height:230px;background:#16233b;font-size:12px;white-space:pre;overflow:auto}.checks{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px}.q,.do{border:1px solid var(--line);border-radius:12px;padding:18px;background:#fff}.q h3{font-size:18px;margin:8px 0 4px}.q p,.do p{margin:6px 0 0;font-size:14px}.q details{margin-top:12px;padding:9px 12px}.q details summary{font-size:13px}.do{background:#fff8e8;border-color:#f8d998;margin:14px 0}.stage-bottom{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-top:24px}.stage-bottom button{padding:11px 15px;border-radius:10px;font-size:14px;font-weight:800}.primary{background:#6838d8;color:white;border:1px solid #6838d8}.secondary{background:white;border:1px solid #becbe0;color:#415470}.after{background:#fff;border:1px solid var(--line);padding:24px;border-radius:18px;margin-top:20px}.after h2{margin:0 0 10px;font-size:22px}.after ul{padding-left:22px;margin:8px 0}.after li{margin:7px 0}.after p{color:var(--muted)}.after a{font-weight:800}.tiny{font-size:13px;color:#62748c}.toast{position:fixed;bottom:25px;left:50%;transform:translateX(-50%);background:#113f32;color:white;border-radius:10px;padding:11px 18px;z-index:50;box-shadow:0 10px 30px #15293e55;display:none}footer{text-align:center;color:#667791;font-size:13px;margin-top:36px}@media(max-width:650px){.mast{padding:26px 20px}.intro,.checks{grid-template-columns:1fr}.panel-head{flex-wrap:wrap}.copy{width:100%}.stage-bottom button{flex:1;font-size:12px}.code{font-size:11px}.etapa{padding:20px}}
+</style></head>
+<body><header class="mast"><div class="brand">UniSENAI · Oficina prática · 90 minutos</div><div class="emoji">🐛 🔨</div><h1>Acerte o Bug</h1><p>Construa o jogo em etapas. Copie o arquivo completo, cole no lugar certo, teste no navegador e descubra o que mudou. <strong>Você não precisa digitar tudo para aprender a lógica.</strong></p><nav class="toplinks"><a href="./vitrine/index.html" target="_blank">🎮 Ver a vitrine</a><a href="./prompts.html" target="_blank">✨ Missões com IA</a><a href="./parte-1-base/jogo-final/index.html" target="_blank">✅ Ver jogo-base pronto</a></nav></header>
+<main class="shell"><div class="intro"><div><h2>Como usar esta página</h2><p>Abra o VS Code e crie uma pasta com <strong>index.html</strong>, <strong>style.css</strong> e <strong>script.js</strong>. Em cada etapa, clique em <strong>Copiar arquivo completo</strong> e substitua apenas o arquivo indicado. Salve (Ctrl+S) e atualize o navegador (F5).</p></div><div style="font-size:34px">⌨️</div></div>
+<div class="steps" role="tablist" aria-label="Etapas do jogo"><button type="button" role="tab" data-show="0" aria-selected="false">Etapa 0</button><button type="button" role="tab" data-show="1" aria-selected="false">Etapa 1</button><button type="button" role="tab" data-show="2" aria-selected="false">Etapa 2</button><button type="button" role="tab" data-show="3" aria-selected="false">Etapa 3</button><button type="button" role="tab" data-show="4" aria-selected="false">Etapa 4</button><button type="button" role="tab" data-show="5" aria-selected="false">Etapa 5</button><button type="button" role="tab" data-show="6" aria-selected="false">Etapa 6</button></div>
+<div id="stages"><section class="etapa" id="etapa-0" data-stage="0" hidden>
+ <div class="stage-top"><span class="counter">ETAPA 0 DE 6</span><span class="time-pill">5–8 min</span></div>
+ <h2>Prepare o terreno</h2>
+ <p class="main-intro">Criamos o documento HTML e conectamos os arquivos CSS e JavaScript.</p>
+ <div class="instruction"><span class="ic">01</span><p><strong>O que fazer:</strong> Substitua todo o conteúdo de index.html pelo código abaixo. Deixe style.css e script.js vazios.</p></div>
+ <div class="panel-code"><div class="panel-head"><div><span class="small-label">ARQUIVO PARA EDITAR</span><strong>index.html</strong></div><button type="button" class="copy" data-copy="code-0">Copiar arquivo completo</button></div><pre id="code-0" class="code"><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;pt-BR&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;title&gt;Acerte o Bug&lt;/title&gt;
+  &lt;link rel=&quot;stylesheet&quot; href=&quot;https://fonts.googleapis.com/css2?family=Lilita+One&amp;display=swap&quot;&gt;
+  &lt;link rel=&quot;stylesheet&quot; href=&quot;style.css&quot;&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+  &lt;!-- Etapa 1: o jogo vai aqui --&gt;
+
+  &lt;script src=&quot;script.js&quot;&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre></div>
+ <details class="diff"><summary>O que entrou nesta etapa? (mostrar só as novidades)</summary><p>A página está vazia de propósito. O HTML define estrutura, o CSS aparência e o JS comportamento.</p><pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;pt-BR&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;title&gt;Acerte o Bug&lt;/title&gt;
+  &lt;link rel=&quot;stylesheet&quot; href=&quot;https://fonts.googleapis.com/css2?family=Lilita+One&amp;display=swap&quot;&gt;
+  &lt;link rel=&quot;stylesheet&quot; href=&quot;style.css&quot;&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+  &lt;!-- Etapa 1: o jogo vai aqui --&gt;
+
+  &lt;script src=&quot;script.js&quot;&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre></details>
+ <div class="checks"><article class="q"><span class="small-label">02 · ANTES DE EXECUTAR</span><h3>Preveja</h3><p>O que aparece ao abrir o index.html antes de colocar qualquer elemento no body?</p><details><summary>Revelar explicação</summary><p>Uma página praticamente vazia, porque ainda não criamos título, placar ou tabuleiro.</p></details></article><article class="q"><span class="small-label">03 · TESTE NO NAVEGADOR</span><h3>Confira</h3><p>Crie uma pasta e três arquivos: index.html, style.css e script.js. Cole este HTML no index.html e abra no navegador.</p></article></div>
+ <article class="do"><span class="small-label">04 · SUA VEZ (SEM COPIAR)</span><p>Localize as linhas &lt;link rel=&quot;stylesheet&quot; href=&quot;style.css&quot;&gt; e &lt;script src=&quot;script.js&quot;&gt;&lt;/script&gt;. Elas conectam os outros dois arquivos.</p></article>
+ <div class="stage-bottom"><button type="button" class="secondary prev" data-step="-1" disabled>← Etapa anterior</button><button type="button" class="primary next" data-step="1" >Próxima etapa →</button></div>
+ </section>
+<section class="etapa" id="etapa-1" data-stage="1" hidden>
+ <div class="stage-top"><span class="counter">ETAPA 1 DE 6</span><span class="time-pill">8–13 min</span></div>
+ <h2>Construa o HTML do jogo</h2>
+ <p class="main-intro">Entraram título, placar, nove divs .buraco, botão Iniciar, mensagem e emoji do martelo.</p>
+ <div class="instruction"><span class="ic">01</span><p><strong>O que fazer:</strong> Substitua TODO o index.html anterior por este HTML completo.</p></div>
+ <div class="panel-code"><div class="panel-head"><div><span class="small-label">ARQUIVO PARA EDITAR</span><strong>index.html</strong></div><button type="button" class="copy" data-copy="code-1">Copiar arquivo completo</button></div><pre id="code-1" class="code"><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;pt-BR&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;title&gt;Acerte o Bug&lt;/title&gt;
+  &lt;link rel=&quot;stylesheet&quot; href=&quot;https://fonts.googleapis.com/css2?family=Lilita+One&amp;display=swap&quot;&gt;
+  &lt;link rel=&quot;stylesheet&quot; href=&quot;style.css&quot;&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+  &lt;h1&gt;Acerte o Bug&lt;/h1&gt;
+
+  &lt;div class=&quot;placar&quot;&gt;
+    &lt;div class=&quot;caixa&quot;&gt;⭐ &lt;span id=&quot;pontos&quot;&gt;0&lt;/span&gt;&lt;/div&gt;
+    &lt;div class=&quot;caixa&quot;&gt;⏱️ &lt;span id=&quot;tempo&quot;&gt;30&lt;/span&gt;&lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;tabuleiro&quot;&gt;
+    &lt;div class=&quot;buraco&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;buraco&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;buraco&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;buraco&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;buraco&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;buraco&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;buraco&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;buraco&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;buraco&quot;&gt;&lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;button id=&quot;iniciar&quot;&gt;Iniciar&lt;/button&gt;
+  &lt;p id=&quot;mensagem&quot;&gt;Martele os bugs!&lt;/p&gt;
+
+  &lt;div id=&quot;martelo&quot;&gt;🔨&lt;/div&gt;
+
+  &lt;script src=&quot;script.js&quot;&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre></div>
+ <details class="diff"><summary>O que entrou nesta etapa? (mostrar só as novidades)</summary><p>IDs identificam elementos específicos (#pontos, #tempo); a classe .buraco se repete nove vezes; o bug ainda não existe na tela.</p><pre><code>  &lt;h1&gt;Acerte o Bug&lt;/h1&gt;
+
+  &lt;div class=&quot;placar&quot;&gt;
+    &lt;div class=&quot;caixa&quot;&gt;⭐ &lt;span id=&quot;pontos&quot;&gt;0&lt;/span&gt;&lt;/div&gt;
+    &lt;div class=&quot;caixa&quot;&gt;⏱️ &lt;span id=&quot;tempo&quot;&gt;30&lt;/span&gt;&lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;tabuleiro&quot;&gt;
+    &lt;div class=&quot;buraco&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;buraco&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;buraco&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;buraco&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;buraco&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;buraco&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;buraco&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;buraco&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;buraco&quot;&gt;&lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;button id=&quot;iniciar&quot;&gt;Iniciar&lt;/button&gt;
+  &lt;p id=&quot;mensagem&quot;&gt;Martele os bugs!&lt;/p&gt;
+
+  &lt;div id=&quot;martelo&quot;&gt;🔨&lt;/div&gt;</code></pre></details>
+ <div class="checks"><article class="q"><span class="small-label">02 · ANTES DE EXECUTAR</span><h3>Preveja</h3><p>Quantos buracos a página deve mostrar? Por que usamos class=&quot;buraco&quot; em vez de nove IDs diferentes?</p><details><summary>Revelar explicação</summary><p>Nove. A classe permite aplicar o mesmo estilo e selecionar todos os buracos juntos.</p></details></article><article class="q"><span class="small-label">03 · TESTE NO NAVEGADOR</span><h3>Confira</h3><p>Salve o index.html e atualize o navegador. Aparecem título, números, nove divs e botão, ainda sem o visual do jogo.</p></article></div>
+ <article class="do"><span class="small-label">04 · SUA VEZ (SEM COPIAR)</span><p>Mude por conta própria apenas o texto &lt;h1&gt;Acerte o Bug&lt;/h1&gt; e atualize. Depois volte ao título original.</p></article>
+ <div class="stage-bottom"><button type="button" class="secondary prev" data-step="0" >← Etapa anterior</button><button type="button" class="primary next" data-step="2" >Próxima etapa →</button></div>
+ </section>
+<section class="etapa" id="etapa-2" data-stage="2" hidden>
+ <div class="stage-top"><span class="counter">ETAPA 2 DE 6</span><span class="time-pill">13–18 min</span></div>
+ <h2>Dê aparência ao jogo</h2>
+ <p class="main-intro">O CSS desenha céu, grama, grade 3×3, buracos ovais, placar e botão; prepara o martelo.</p>
+ <div class="instruction"><span class="ic">01</span><p><strong>O que fazer:</strong> Cole este CSS COMPLETO no style.css. Não mexa nos outros arquivos.</p></div>
+ <div class="panel-code"><div class="panel-head"><div><span class="small-label">ARQUIVO PARA EDITAR</span><strong>style.css</strong></div><button type="button" class="copy" data-copy="code-2">Copiar arquivo completo</button></div><pre id="code-2" class="code"><code>body {
+  margin: 0;
+  min-height: 100vh;
+  background: linear-gradient(#7fd3ff, #d9f5ff);
+  font-family: &#x27;Lilita One&#x27;, &#x27;Arial Black&#x27;, sans-serif;
+  text-align: center;
+  cursor: none;
+  user-select: none;
+}
+
+h1 {
+  margin: 30px 0 16px;
+  font-size: 64px;
+  color: #ffd23f;
+  text-shadow: 0 6px 0 #e07a00;
+}
+
+.placar {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.caixa {
+  width: 120px;
+  padding: 8px;
+  font-size: 32px;
+  color: #3a3a3a;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 6px 0 #9cc9dd;
+}
+
+.tabuleiro {
+  display: inline-grid;
+  grid-template-columns: 100px 100px 100px;
+  gap: 20px;
+  padding: 10px 24px 30px;
+  background: #6cc24a;
+  border-radius: 40px;
+  box-shadow: 0 14px 0 #4a9a2e;
+}
+
+.buraco {
+  height: 56px;
+  margin-top: 30px;
+  border-radius: 50%;
+  background: #3b2412;
+  border: 6px solid #8a5a2b;
+  font-size: 56px;
+  line-height: 20px;
+}
+
+button {
+  display: block;
+  margin: 40px auto 0;
+  padding: 12px 50px;
+  font-family: inherit;
+  font-size: 30px;
+  color: white;
+  background: #ff7a00;
+  border: none;
+  border-radius: 20px;
+  box-shadow: 0 8px 0 #b85400;
+  cursor: none;
+}
+
+button:active {
+  transform: translateY(6px);
+  box-shadow: 0 2px 0 #b85400;
+}
+
+button:disabled {
+  opacity: 0.5;
+}
+
+#mensagem {
+  font-size: 28px;
+  color: #2d6a1b;
+}
+
+#martelo {
+  position: fixed;
+  left: -100px;
+  top: -100px;
+  margin: -54px 0 0 -14px;
+  font-size: 64px;
+  pointer-events: none;
+  transform-origin: bottom right;
+  transform: rotate(15deg);
+  transition: transform 0.06s;
+}
+
+#martelo.batendo {
+  transform: rotate(-15deg);
+}
+</code></pre></div>
+ <details class="diff"><summary>O que entrou nesta etapa? (mostrar só as novidades)</summary><p>A classe .tabuleiro usa CSS Grid; .buraco desenha o oval; #martelo fica fixo e segue invisível até o JavaScript da etapa seguinte.</p><pre><code>body {
+  margin: 0;
+  min-height: 100vh;
+  background: linear-gradient(#7fd3ff, #d9f5ff);
+  font-family: &#x27;Lilita One&#x27;, &#x27;Arial Black&#x27;, sans-serif;
+  text-align: center;
+  cursor: none;
+  user-select: none;
+}
+
+h1 {
+  margin: 30px 0 16px;
+  font-size: 64px;
+  color: #ffd23f;
+  text-shadow: 0 6px 0 #e07a00;
+}
+
+.placar {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.caixa {
+  width: 120px;
+  padding: 8px;
+  font-size: 32px;
+  color: #3a3a3a;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 6px 0 #9cc9dd;
+}
+
+.tabuleiro {
+  display: inline-grid;
+  grid-template-columns: 100px 100px 100px;
+  gap: 20px;
+  padding: 10px 24px 30px;
+  background: #6cc24a;
+  border-radius: 40px;
+  box-shadow: 0 14px 0 #4a9a2e;
+}
+
+.buraco {
+  height: 56px;
+  margin-top: 30px;
+  border-radius: 50%;
+  background: #3b2412;
+  border: 6px solid #8a5a2b;
+  font-size: 56px;
+  line-height: 20px;
+}
+
+button {
+  display: block;
+  margin: 40px auto 0;
+  padding: 12px 50px;
+  font-family: inherit;
+  font-size: 30px;
+  color: white;
+  background: #ff7a00;
+  border: none;
+  border-radius: 20px;
+  box-shadow: 0 8px 0 #b85400;
+  cursor: none;
+}
+
+button:active {
+  transform: translateY(6px);
+  box-shadow: 0 2px 0 #b85400;
+}
+
+button:disabled {
+  opacity: 0.5;
+}
+
+#mensagem {
+  font-size: 28px;
+  color: #2d6a1b;
+}
+
+#martelo {
+  position: fixed;
+  left: -100px;
+  top: -100px;
+  margin: -54px 0 0 -14px;
+  font-size: 64px;
+  pointer-events: none;
+  transform-origin: bottom right;
+  transform: rotate(15deg);
+  transition: transform 0.06s;
+}
+
+#martelo.batendo {
+  transform: rotate(-15deg);
+}</code></pre></details>
+ <div class="checks"><article class="q"><span class="small-label">02 · ANTES DE EXECUTAR</span><h3>Preveja</h3><p>O que acontecerá com o ponteiro do mouse quando adicionarmos cursor: none?</p><details><summary>Revelar explicação</summary><p>O ponteiro padrão desaparece. É intencional: na próxima etapa, o emoji de martelo seguirá o movimento do mouse.</p></details></article><article class="q"><span class="small-label">03 · TESTE NO NAVEGADOR</span><h3>Confira</h3><p>Cole no style.css, salve e atualize: o jogo ganha visual. O cursor some temporariamente até a etapa 3.</p></article></div>
+ <article class="do"><span class="small-label">04 · SUA VEZ (SEM COPIAR)</span><p>Mude a cor de background da classe .tabuleiro e observe o gramado.</p></article>
+ <div class="stage-bottom"><button type="button" class="secondary prev" data-step="1" >← Etapa anterior</button><button type="button" class="primary next" data-step="3" >Próxima etapa →</button></div>
+ </section>
+<section class="etapa" id="etapa-3" data-stage="3" hidden>
+ <div class="stage-top"><span class="counter">ETAPA 3 DE 6</span><span class="time-pill">18–23 min</span></div>
+ <h2>Faça o martelo seguir o mouse</h2>
+ <p class="main-intro">Novo: document.getElementById, eventos mousemove, mousedown e mouseup, estilo left/top e classe .batendo.</p>
+ <div class="instruction"><span class="ic">01</span><p><strong>O que fazer:</strong> Cole TODO este arquivo no script.js. Como estava vazio, é a primeira vez que recebe código.</p></div>
+ <div class="panel-code"><div class="panel-head"><div><span class="small-label">ARQUIVO PARA EDITAR</span><strong>script.js</strong></div><button type="button" class="copy" data-copy="code-3">Copiar arquivo completo</button></div><pre id="code-3" class="code"><code>// Pegar os elementos da página
+const martelo = document.getElementById(&#x27;martelo&#x27;);
+
+// O martelo segue o mouse
+document.addEventListener(&#x27;mousemove&#x27;, function (evento) {
+  martelo.style.left = evento.clientX + &#x27;px&#x27;;
+  martelo.style.top = evento.clientY + &#x27;px&#x27;;
+});
+
+// Apertou o botão do mouse: martelo desce
+document.addEventListener(&#x27;mousedown&#x27;, function () {
+  martelo.classList.add(&#x27;batendo&#x27;);
+});
+
+// Soltou o botão do mouse: martelo sobe
+document.addEventListener(&#x27;mouseup&#x27;, function () {
+  martelo.classList.remove(&#x27;batendo&#x27;);
+});
+</code></pre></div>
+ <details class="diff"><summary>O que entrou nesta etapa? (mostrar só as novidades)</summary><p>getElementById acha um elemento; addEventListener responde a uma ação; clientX/clientY são as coordenadas do mouse.</p><pre><code>// Pegar os elementos da página
+const martelo = document.getElementById(&#x27;martelo&#x27;);
+
+// O martelo segue o mouse
+document.addEventListener(&#x27;mousemove&#x27;, function (evento) {
+  martelo.style.left = evento.clientX + &#x27;px&#x27;;
+  martelo.style.top = evento.clientY + &#x27;px&#x27;;
+});
+
+// Apertou o botão do mouse: martelo desce
+document.addEventListener(&#x27;mousedown&#x27;, function () {
+  martelo.classList.add(&#x27;batendo&#x27;);
+});
+
+// Soltou o botão do mouse: martelo sobe
+document.addEventListener(&#x27;mouseup&#x27;, function () {
+  martelo.classList.remove(&#x27;batendo&#x27;);
+});</code></pre></details>
+ <div class="checks"><article class="q"><span class="small-label">02 · ANTES DE EXECUTAR</span><h3>Preveja</h3><p>Quando o mouse se move, qual parte do código atualiza a posição do martelo?</p><details><summary>Revelar explicação</summary><p>O evento mousemove altera martelo.style.left e martelo.style.top com as coordenadas clientX/clientY.</p></details></article><article class="q"><span class="small-label">03 · TESTE NO NAVEGADOR</span><h3>Confira</h3><p>Cole no script.js e atualize. O 🔨 segue o mouse e inclina quando você aperta o botão.</p></article></div>
+ <article class="do"><span class="small-label">04 · SUA VEZ (SEM COPIAR)</span><p>Clique e solte em qualquer lugar. Observe a classe .batendo sendo adicionada e removida.</p></article>
+ <div class="stage-bottom"><button type="button" class="secondary prev" data-step="2" >← Etapa anterior</button><button type="button" class="primary next" data-step="4" >Próxima etapa →</button></div>
+ </section>
+<section class="etapa" id="etapa-4" data-stage="4" hidden>
+ <div class="stage-top"><span class="counter">ETAPA 4 DE 6</span><span class="time-pill">23–29 min</span></div>
+ <h2>Faça o bug pular</h2>
+ <p class="main-intro">Novo: lista de buracos, variável buracoAtual, função mostrarBug(), sorteio Math.random(), botão com iniciar() e setInterval(..., 800).</p>
+ <div class="instruction"><span class="ic">01</span><p><strong>O que fazer:</strong> Atenção: SUBSTITUA TODO o script.js anterior; não cole este código no fim. Nesta etapa, o botão ainda permite criar vários intervalos se clicado repetidamente: recarregue a página para recomeçar.</p></div>
+ <div class="panel-code"><div class="panel-head"><div><span class="small-label">ARQUIVO PARA EDITAR</span><strong>script.js</strong></div><button type="button" class="copy" data-copy="code-4">Copiar arquivo completo</button></div><pre id="code-4" class="code"><code>// Pegar os elementos da página
+const buracos = document.querySelectorAll(&#x27;.buraco&#x27;);
+const botao = document.getElementById(&#x27;iniciar&#x27;);
+const martelo = document.getElementById(&#x27;martelo&#x27;);
+
+// Variáveis do jogo
+let buracoAtual = buracos[0];
+let pulo;
+
+// O martelo segue o mouse
+document.addEventListener(&#x27;mousemove&#x27;, function (evento) {
+  martelo.style.left = evento.clientX + &#x27;px&#x27;;
+  martelo.style.top = evento.clientY + &#x27;px&#x27;;
+});
+
+// Apertou o botão do mouse: martelo desce
+document.addEventListener(&#x27;mousedown&#x27;, function () {
+  martelo.classList.add(&#x27;batendo&#x27;);
+});
+
+// Soltou o botão do mouse: martelo sobe
+document.addEventListener(&#x27;mouseup&#x27;, function () {
+  martelo.classList.remove(&#x27;batendo&#x27;);
+});
+
+// Tira o bug do buraco atual e coloca num buraco sorteado
+function mostrarBug() {
+  buracoAtual.textContent = &#x27;&#x27;;
+  const sorteio = Math.floor(Math.random() * 9);
+  buracoAtual = buracos[sorteio];
+  buracoAtual.textContent = &#x27;🐛&#x27;;
+}
+
+// Liga o relógio que faz o bug pular
+function iniciar() {
+  mostrarBug();
+  pulo = setInterval(mostrarBug, 800);
+}
+
+botao.addEventListener(&#x27;click&#x27;, iniciar);
+</code></pre></div>
+ <details class="diff"><summary>O que entrou nesta etapa? (mostrar só as novidades)</summary><p>O bug é apenas o texto 🐛 dentro de um buraco. Math.random gera valor de 0 a quase 1; Math.floor transforma em índice de 0 a 8.</p><pre><code>const buracos = document.querySelectorAll(&#x27;.buraco&#x27;);
+const botao = document.getElementById(&#x27;iniciar&#x27;);
+
+// Variáveis do jogo
+let buracoAtual = buracos[0];
+let pulo;
+
+// Tira o bug do buraco atual e coloca num buraco sorteado
+function mostrarBug() {
+  buracoAtual.textContent = &#x27;&#x27;;
+  const sorteio = Math.floor(Math.random() * 9);
+  buracoAtual = buracos[sorteio];
+  buracoAtual.textContent = &#x27;🐛&#x27;;
+}
+
+// Liga o relógio que faz o bug pular
+function iniciar() {
+  mostrarBug();
+  pulo = setInterval(mostrarBug, 800);
+}
+
+botao.addEventListener(&#x27;click&#x27;, iniciar);</code></pre></details>
+ <div class="checks"><article class="q"><span class="small-label">02 · ANTES DE EXECUTAR</span><h3>Preveja</h3><p>Por que multiplicamos Math.random() por 9, e não por 10?</p><details><summary>Revelar explicação</summary><p>Existem nove posições indexadas de 0 a 8. Multiplicar por 9 e aplicar Math.floor gera exatamente esses índices.</p></details></article><article class="q"><span class="small-label">03 · TESTE NO NAVEGADOR</span><h3>Confira</h3><p>Substitua todo script.js, atualize e clique UMA vez em Iniciar. O bug muda de buraco a cada 800 ms.</p></article></div>
+ <article class="do"><span class="small-label">04 · SUA VEZ (SEM COPIAR)</span><p>Mude temporariamente o 9 para 3 na linha do sorteio. Em quais buracos o bug aparece? Depois volte para 9.</p></article>
+ <div class="stage-bottom"><button type="button" class="secondary prev" data-step="3" >← Etapa anterior</button><button type="button" class="primary next" data-step="5" >Próxima etapa →</button></div>
+ </section>
+<section class="etapa" id="etapa-5" data-stage="5" hidden>
+ <div class="stage-top"><span class="counter">ETAPA 5 DE 6</span><span class="time-pill">29–35 min</span></div>
+ <h2>Conte as marteladas certas</h2>
+ <p class="main-intro">Novo: contador pontos, textoPontos e um evento mousedown em CADA buraco usando forEach.</p>
+ <div class="instruction"><span class="ic">01</span><p><strong>O que fazer:</strong> SUBSTITUA TODO o script.js anterior por esta versão. Não junte dois arquivos.</p></div>
+ <div class="panel-code"><div class="panel-head"><div><span class="small-label">ARQUIVO PARA EDITAR</span><strong>script.js</strong></div><button type="button" class="copy" data-copy="code-5">Copiar arquivo completo</button></div><pre id="code-5" class="code"><code>// Pegar os elementos da página
+const buracos = document.querySelectorAll(&#x27;.buraco&#x27;);
+const botao = document.getElementById(&#x27;iniciar&#x27;);
+const textoPontos = document.getElementById(&#x27;pontos&#x27;);
+const martelo = document.getElementById(&#x27;martelo&#x27;);
+
+// Variáveis do jogo
+let pontos = 0;
+let buracoAtual = buracos[0];
+let pulo;
+
+// O martelo segue o mouse
+document.addEventListener(&#x27;mousemove&#x27;, function (evento) {
+  martelo.style.left = evento.clientX + &#x27;px&#x27;;
+  martelo.style.top = evento.clientY + &#x27;px&#x27;;
+});
+
+// Apertou o botão do mouse: martelo desce
+document.addEventListener(&#x27;mousedown&#x27;, function () {
+  martelo.classList.add(&#x27;batendo&#x27;);
+});
+
+// Soltou o botão do mouse: martelo sobe
+document.addEventListener(&#x27;mouseup&#x27;, function () {
+  martelo.classList.remove(&#x27;batendo&#x27;);
+});
+
+// Tira o bug do buraco atual e coloca num buraco sorteado
+function mostrarBug() {
+  buracoAtual.textContent = &#x27;&#x27;;
+  const sorteio = Math.floor(Math.random() * 9);
+  buracoAtual = buracos[sorteio];
+  buracoAtual.textContent = &#x27;🐛&#x27;;
+}
+
+// Liga o relógio que faz o bug pular
+function iniciar() {
+  mostrarBug();
+  pulo = setInterval(mostrarBug, 800);
+}
+
+botao.addEventListener(&#x27;click&#x27;, iniciar);
+
+// Martelada em cada buraco: se tem bug, ganha ponto
+buracos.forEach(function (buraco) {
+  buraco.addEventListener(&#x27;mousedown&#x27;, function () {
+    if (buraco.textContent === &#x27;🐛&#x27;) {
+      buraco.textContent = &#x27;💥&#x27;;
+      pontos = pontos + 1;
+      textoPontos.textContent = pontos;
+    }
+  });
+});
+</code></pre></div>
+ <details class="diff"><summary>O que entrou nesta etapa? (mostrar só as novidades)</summary><p>Cada buraco recebe um ouvinte de clique. Se o textContent for 🐛, ele vira 💥, soma 1 e atualiza o span #pontos.</p><pre><code>const textoPontos = document.getElementById(&#x27;pontos&#x27;);
+let pontos = 0;
+
+// Martelada em cada buraco: se tem bug, ganha ponto
+buracos.forEach(function (buraco) {
+  buraco.addEventListener(&#x27;mousedown&#x27;, function () {
+    if (buraco.textContent === &#x27;🐛&#x27;) {
+      buraco.textContent = &#x27;💥&#x27;;
+      pontos = pontos + 1;
+      textoPontos.textContent = pontos;
+    }
+  });
+});</code></pre></details>
+ <div class="checks"><article class="q"><span class="small-label">02 · ANTES DE EXECUTAR</span><h3>Preveja</h3><p>Se você clicar num buraco vazio, deve aumentar a pontuação? Que condição controla isso?</p><details><summary>Revelar explicação</summary><p>Não. A condição if (buraco.textContent === &quot;🐛&quot;) só soma pontos quando existe o emoji naquele buraco.</p></details></article><article class="q"><span class="small-label">03 · TESTE NO NAVEGADOR</span><h3>Confira</h3><p>Substitua todo script.js, atualize e clique uma vez em Iniciar. Acerte os bugs e veja os pontos aumentarem.</p></article></div>
+ <article class="do"><span class="small-label">04 · SUA VEZ (SEM COPIAR)</span><p>Identifique a linha pontos = pontos + 1. O que aconteceria se ela fosse pontos = pontos + 2?</p></article>
+ <div class="stage-bottom"><button type="button" class="secondary prev" data-step="4" >← Etapa anterior</button><button type="button" class="primary next" data-step="6" >Próxima etapa →</button></div>
+ </section>
+<section class="etapa" id="etapa-6" data-stage="6" hidden>
+ <div class="stage-top"><span class="counter">ETAPA 6 DE 6</span><span class="time-pill">35–40 min</span></div>
+ <h2>Coloque relógio e fim de jogo</h2>
+ <p class="main-intro">Novo: tempo = 30, contarTempo(), segundo intervalo de 1000 ms, clearInterval() e bloqueio/reabertura do botão.</p>
+ <div class="instruction"><span class="ic">01</span><p><strong>O que fazer:</strong> SUBSTITUA TODO o script.js pela última versão. Esta é a base concluída para as missões com IA.</p></div>
+ <div class="panel-code"><div class="panel-head"><div><span class="small-label">ARQUIVO PARA EDITAR</span><strong>script.js</strong></div><button type="button" class="copy" data-copy="code-6">Copiar arquivo completo</button></div><pre id="code-6" class="code"><code>// Pegar os elementos da página
+const buracos = document.querySelectorAll(&#x27;.buraco&#x27;);
+const botao = document.getElementById(&#x27;iniciar&#x27;);
+const textoPontos = document.getElementById(&#x27;pontos&#x27;);
+const textoTempo = document.getElementById(&#x27;tempo&#x27;);
+const mensagem = document.getElementById(&#x27;mensagem&#x27;);
+const martelo = document.getElementById(&#x27;martelo&#x27;);
+
+// Variáveis do jogo
+let pontos = 0;
+let tempo = 30;
+let buracoAtual = buracos[0];
+let pulo;
+let relogio;
+
+// O martelo segue o mouse
+document.addEventListener(&#x27;mousemove&#x27;, function (evento) {
+  martelo.style.left = evento.clientX + &#x27;px&#x27;;
+  martelo.style.top = evento.clientY + &#x27;px&#x27;;
+});
+
+// Apertou o botão do mouse: martelo desce
+document.addEventListener(&#x27;mousedown&#x27;, function () {
+  martelo.classList.add(&#x27;batendo&#x27;);
+});
+
+// Soltou o botão do mouse: martelo sobe
+document.addEventListener(&#x27;mouseup&#x27;, function () {
+  martelo.classList.remove(&#x27;batendo&#x27;);
+});
+
+// Tira o bug do buraco atual e coloca num buraco sorteado
+function mostrarBug() {
+  buracoAtual.textContent = &#x27;&#x27;;
+  const sorteio = Math.floor(Math.random() * 9);
+  buracoAtual = buracos[sorteio];
+  buracoAtual.textContent = &#x27;🐛&#x27;;
+}
+
+// Tira 1 segundo. Quando chega a 0, acaba o jogo
+function contarTempo() {
+  tempo = tempo - 1;
+  textoTempo.textContent = tempo;
+
+  if (tempo === 0) {
+    clearInterval(pulo);
+    clearInterval(relogio);
+    buracoAtual.textContent = &#x27;&#x27;;
+    mensagem.textContent = &#x27;Fim de jogo! Você fez &#x27; + pontos + &#x27; pontos.&#x27;;
+    botao.disabled = false;
+  }
+}
+
+// Zera tudo e liga os dois relógios
+function iniciar() {
+  pontos = 0;
+  tempo = 30;
+  textoPontos.textContent = pontos;
+  textoTempo.textContent = tempo;
+  mensagem.textContent = &#x27;&#x27;;
+  botao.disabled = true;
+
+  mostrarBug();
+  pulo = setInterval(mostrarBug, 800);
+  relogio = setInterval(contarTempo, 1000);
+}
+
+botao.addEventListener(&#x27;click&#x27;, iniciar);
+
+// Martelada em cada buraco: se tem bug, ganha ponto
+buracos.forEach(function (buraco) {
+  buraco.addEventListener(&#x27;mousedown&#x27;, function () {
+    if (buraco.textContent === &#x27;🐛&#x27;) {
+      buraco.textContent = &#x27;💥&#x27;;
+      pontos = pontos + 1;
+      textoPontos.textContent = pontos;
+    }
+  });
+});
+</code></pre></div>
+ <details class="diff"><summary>O que entrou nesta etapa? (mostrar só as novidades)</summary><p>São dois relógios independentes: o bug pula a cada 800 ms; o cronômetro reduz a cada 1000 ms. Quando o tempo chega a zero, ambos param.</p><pre><code>const textoTempo = document.getElementById(&#x27;tempo&#x27;);
+const mensagem = document.getElementById(&#x27;mensagem&#x27;);
+let tempo = 30;
+let relogio;
+// Tira 1 segundo. Quando chega a 0, acaba o jogo
+function contarTempo() {
+  tempo = tempo - 1;
+  textoTempo.textContent = tempo;
+
+  if (tempo === 0) {
+    clearInterval(pulo);
+    clearInterval(relogio);
+    buracoAtual.textContent = &#x27;&#x27;;
+    mensagem.textContent = &#x27;Fim de jogo! Você fez &#x27; + pontos + &#x27; pontos.&#x27;;
+    botao.disabled = false;
+  }
+}
+
+// Zera tudo e liga os dois relógios
+  pontos = 0;
+  tempo = 30;
+  textoPontos.textContent = pontos;
+  textoTempo.textContent = tempo;
+  mensagem.textContent = &#x27;&#x27;;
+  botao.disabled = true;
+
+  relogio = setInterval(contarTempo, 1000);</code></pre></details>
+ <div class="checks"><article class="q"><span class="small-label">02 · ANTES DE EXECUTAR</span><h3>Preveja</h3><p>Por que é necessário chamar clearInterval() para dois intervalos diferentes?</p><details><summary>Revelar explicação</summary><p>Porque criamos dois processos repetidos, pulo e relogio. Parar somente um deixaria o outro executando.</p></details></article><article class="q"><span class="small-label">03 · TESTE NO NAVEGADOR</span><h3>Confira</h3><p>Substitua todo script.js, atualize, inicie e jogue. Ao chegar em zero, o bug some, aparece o resultado e o botão volta a funcionar.</p></article></div>
+ <article class="do"><span class="small-label">04 · SUA VEZ (SEM COPIAR)</span><p>Localize tempo = 30 e explique o que mudaria se fosse 15. Não precisa esperar meia hora: são segundos.</p></article>
+ <div class="stage-bottom"><button type="button" class="secondary prev" data-step="5" >← Etapa anterior</button><button type="button" class="primary next" data-step="7" disabled>Próxima etapa →</button></div>
+ </section></div>
+<section class="after" id="desafios"><span class="small-label">40–50 MIN · AGORA SEM COPIAR</span><h2>Dois desafios rápidos</h2><p>Com a etapa 6 funcionando, mexa em uma linha e teste. O objetivo não é decorar; é prever o comportamento.</p><ul><li><strong>Desafio A — Mais veloz:</strong> ache <code>setInterval(mostrarBug, 800)</code> e troque <code>800</code> por <code>450</code>. O bug fica mais fácil ou mais difícil de acertar?</li><li><strong>Desafio B — Outro inimigo:</strong> troque o emoji <code>🐛</code> por <code>🐞</code> na função <code>mostrarBug()</code>. Por que os pontos param de aumentar? Corrija o teste <code>textContent === '🐛'</code>.</li></ul><p class="tiny">Se precisar, copie de novo a etapa 6 para recuperar o código original.</p></section>
+<section class="after" id="ia"><span class="small-label">50–80 MIN · MISSÕES EM DUPLA</span><h2>Agora a IA entra — mas vocês comandam</h2><p>Abra a página de missões, comece pelo <strong>Prompt 0</strong> e inclua os três arquivos atuais. Peça apenas uma mudança por vez. Antes de colar a resposta, identifique o arquivo e a função que serão alterados.</p><p><a href="./prompts.html" target="_blank">Abrir os prompts das missões com IA</a></p><p class="tiny">Metas sugeridas: Missão 1 (visual) e Missão 2 (dificuldade). As missões 3 a 6 são extras. Salve uma cópia da pasta antes de cada nova missão.</p></section><footer>Oficina Acerte o Bug · Base construída do zero, evoluída com responsabilidade.</footer></main><div role="status" aria-live="polite" id="toast" class="toast"></div>
+<script>
+(function(){
+let active=0;
+const sections=[...document.querySelectorAll('.etapa')], tabs=[...document.querySelectorAll('[data-show]')];
+function show(n,scroll=true){if(n<0||n>=sections.length)return;active=n;sections.forEach((e,i)=>e.hidden=i!==n);tabs.forEach((e,i)=>{e.classList.toggle('active',i===n);e.setAttribute('aria-selected',String(i===n))});if(scroll)window.scrollTo({top:document.querySelector('.steps').getBoundingClientRect().top+window.scrollY-5,behavior:'smooth'});}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';clearTimeout(toast.timer);toast.timer=setTimeout(()=>t.style.display='none',2600)}
+async function copyText(str){if(navigator.clipboard&&window.isSecureContext){try{await navigator.clipboard.writeText(str);return true}catch(e){}}
+const t=document.createElement('textarea');t.value=str;t.setAttribute('readonly','');t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);t.focus();t.select();let ok=false;try{ok=document.execCommand('copy')}catch(e){}t.remove();return ok;}
+tabs.forEach(b=>b.addEventListener('click',()=>show(Number(b.dataset.show))));document.querySelectorAll('[data-step]').forEach(b=>b.addEventListener('click',()=>show(Number(b.dataset.step))));
+document.querySelectorAll('[data-copy]').forEach(b=>b.addEventListener('click',async()=>{const code=document.getElementById(b.dataset.copy).textContent;const ok=await copyText(code);if(ok){toast('✓ Arquivo completo copiado. Cole no arquivo indicado!');return}const p=document.getElementById(b.dataset.copy);const s=window.getSelection();const r=document.createRange();r.selectNodeContents(p);s.removeAllRanges();s.addRange(r);toast('Selecione e copie o código destacado com Ctrl+C.')}));
+const target=window.location.hash.match(/^#etapa-([0-6])$/);show(target?Number(target[1]):0,Boolean(target));
+})();
+</script></body></html>
